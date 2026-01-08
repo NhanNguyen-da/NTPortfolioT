@@ -1,0 +1,9 @@
+<div class="demo-container" *ngIf="isOpen">
+  <div class="demo-header">
+    <h2>{{ title }}</h2>
+    <button class="close-btn" (click)="onClose()"><!-- TODO: Close icon --></button>
+  </div>
+  <div class="demo-body">
+    <ng-content></ng-content>
+  </div>
+</div>

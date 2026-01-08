@@ -1,0 +1,28 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+
+  // Smooth scrolling
+  scroll-behavior: smooth;
+
+  // TODO: Add specific layout styles once components are integrated
+}
+
+// Placeholder section styles
+.section {
+  @include flex-center;
+  flex-direction: column;
+  padding: var(--section-padding);
+
+  h1 {
+    font-family: var(--font-family-heading);
+    color: var(--color-primary);
+  }
+
+  p {
+    color: var(--color-text-secondary);
+  }
+}

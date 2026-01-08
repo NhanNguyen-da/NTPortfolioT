@@ -1,0 +1,27 @@
+@import '../../../../../../../styles/variables';
+@import '../../../../../../../styles/mixins';
+
+.trunk-node {
+  // TODO: Node circle styling
+  // TODO: Positioning along trunk
+  // TODO: Cursor pointer
+  // TODO: Transition effects
+
+  &.active {
+    // TODO: Active state - larger, pulsing
+  }
+
+  &.passed {
+    // TODO: Passed state - filled color
+  }
+}
+
+// TODO: Bloom animation keyframes
+@keyframes bloom {
+  // TODO: Scale from small to normal with rotation
+}
+
+// TODO: Pulse animation keyframes
+@keyframes pulse {
+  // TODO: Subtle scale pulse for active node
+}
