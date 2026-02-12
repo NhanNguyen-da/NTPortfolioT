@@ -12,7 +12,7 @@ export class ExperienceComponent {
   jobs = [
     {
       id: 1,
-      title: 'IT Operation Executive',
+      title: 'IT Executive',
       company: 'Hoan My Sai Gon General Hospital',
       period: 'May 2025 - Present',
       description: 'Leading EMR rollout and digital ecosystem integration.',
@@ -26,7 +26,7 @@ export class ExperienceComponent {
     },
     {
       id: 2,
-      title: 'IT Supervisor',
+      title: 'Application Development',
       company: 'Van Phuc City General Hospital',
       period: 'Oct 2024 - May 2025',
       description: 'Managed IT support and requirement analysis.',
@@ -60,7 +60,8 @@ export class ExperienceComponent {
       details: [
         'Designed database structures for HIS FPT migration',
         'Collaborated on LIS, PACS, and ERP implementation',
-        'Developed SOPs and conducted staff training'
+        'Developed SOPs and conducted staff training',
+        'Collaborate closely with the Biomedical team'
       ],
       active: false
     }
