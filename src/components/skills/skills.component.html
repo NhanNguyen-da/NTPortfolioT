@@ -1,0 +1,65 @@
+<section id="skills" class="scroll-mt-24 py-24 bg-white dark:bg-slate-900 transition-colors">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col md:flex-row gap-16">
+      
+      <!-- Text Side -->
+      <div appScrollReveal class="w-full md:w-1/3">
+        <h2 class="text-sm font-bold tracking-widest text-teal-600 dark:text-teal-400 uppercase mb-3">My Expertise</h2>
+        <h3 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-6">Skills & Tools</h3>
+        <p class="text-slate-600 dark:text-slate-300 text-lg leading-relaxed mb-8">
+          A comprehensive toolkit tailored for healthcare digitalization. From deep database management to leading cross-functional teams, I bring a balance of technical prowess and operational wisdom.
+        </p>
+        
+        <!-- Tab Buttons -->
+        <div class="flex flex-col space-y-3">
+          @for (tab of tabs; track tab.id) {
+            <button 
+              (click)="setTab(tab.id)"
+              [class.bg-teal-600]="activeTab() === tab.id"
+              [class.text-white]="activeTab() === tab.id"
+              [class.shadow-lg]="activeTab() === tab.id"
+              [class.shadow-teal-500/30]="activeTab() === tab.id"
+              [class.text-slate-600]="activeTab() !== tab.id"
+              [class.dark:text-slate-400]="activeTab() !== tab.id"
+              class="group flex items-center text-left px-6 py-4 rounded-xl font-semibold transition-all duration-300 hover:bg-teal-50 dark:hover:bg-slate-800"
+              [class.hover:text-teal-600]="activeTab() !== tab.id">
+              
+              <!-- Icon -->
+              <svg 
+                class="w-6 h-6 mr-4 transition-transform group-hover:scale-110" 
+                [class.text-teal-200]="activeTab() === tab.id"
+                [class.text-slate-400]="activeTab() !== tab.id"
+                [class.group-hover:text-teal-500]="activeTab() !== tab.id"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="tab.icon" />
+              </svg>
+
+              {{ tab.label }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Skills Display Side -->
+      <div appScrollReveal class="w-full md:w-2/3 bg-slate-50 dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm flex items-center">
+        <div class="w-full grid gap-8">
+          @for (skill of skillsData[activeTab()]; track skill.name) {
+            <div class="group">
+              <div class="flex justify-between mb-2">
+                <span class="font-medium text-slate-700 dark:text-slate-200 flex items-center">
+                  <span class="w-2 h-2 bg-teal-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  {{ skill.name }}
+                </span>
+                <span class="text-sm font-bold text-teal-600 dark:text-teal-400">{{ skill.percent }}%</span>
+              </div>
+              <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5 overflow-hidden">
+                <div class="bg-gradient-to-r from-teal-500 to-purple-500 h-2.5 rounded-full transition-all duration-1000 ease-out group-hover:scale-x-105 origin-left shadow-[0_0_10px_rgba(20,184,166,0.5)]" [style.width.%]="skill.percent"></div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>

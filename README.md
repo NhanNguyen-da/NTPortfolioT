@@ -1,35 +1,20 @@
-# NTPortfolioT
-Create a single-page storytelling portfolio website for Nguyen Trung Nhan, an IT Supervisor specializing in Healthcare IT systems. This is NOT a traditional CV website - it's an interactive journey that tells the story of his career progression through visual storytelling and animations.
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-Tech Stack:
+# Run and deploy your AI Studio app
 
-+ Frontend: Angular 17+ (standalone components preferred)
-+ Runtime: Node.js
-+ Optional: Python (only if needed for mock demo applications)
-+ Database: None - all data stored in TypeScript files
-+ Styling: SCSS with CSS custom properties
-+ Animations: Angular Animations + CSS animations
+This contains everything you need to run your app locally.
 
-# Design Concept
-Overall Vision
-The portfolio is designed as a cinematic journey through Nhan's career. Users scroll through the story like watching a documentary, with smooth transitions and meaningful animations that enhance the narrative rather than distract from it.
+View your app in AI Studio: https://ai.studio/apps/drive/1tWrtAT7fleNAncwXyZep-v29aeZP-jmJ
 
-# The "Trunk" Concept
-The trunk is a vertical tree/road/path that represents the journey through time:
+## Run Locally
 
-Visual Style: An organic, hand-drawn line that "grows" downward with nodes at each milestone
-Nodes: Red/accent colored dots at each career milestone (education + work combined)
-Interaction:
-
-Scroll: As user scrolls, nodes activate sequentially
-Click: User can click any node to jump to that milestone
-
-# Detail Panel Behavior
-
-Always visible on the right side (desktop)
-Content transitions smoothly when a new node is selected
-Can contain: images, text, achievements, and interactive demo buttons
-Demos load as overlays/modals when triggered
+**Prerequisites:**  Node.js
 
 
-Animation: The trunk "draws" itself on page load, nodes "bloom" as the line reaches them
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

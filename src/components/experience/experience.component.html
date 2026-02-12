@@ -1,0 +1,76 @@
+<section id="experience" class="scroll-mt-24 py-24 bg-slate-50 dark:bg-slate-800 transition-colors">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16" appScrollReveal>
+      <h2 class="text-sm font-bold tracking-widest text-teal-600 dark:text-teal-400 uppercase mb-3">Work History</h2>
+      <h3 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white">Professional Experience</h3>
+    </div>
+
+    <div class="relative max-w-4xl mx-auto">
+      <!-- Vertical Line -->
+      <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-700"></div>
+
+      @for (job of jobs; track job.id; let i = $index) {
+        <div appScrollReveal class="relative flex flex-col md:flex-row items-center mb-12 last:mb-0 group">
+          
+          <!-- Timeline Dot -->
+          <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-teal-600 rounded-full border-4 border-white dark:border-slate-800 z-10 group-hover:scale-125 transition-transform"></div>
+
+          <!-- Date (Desktop Left / Right alternates) -->
+          <div class="w-full md:w-1/2 pl-12 md:pl-0 md:pr-12 md:text-right order-1" [class.md:order-1]="i % 2 === 0" [class.md:order-3]="i % 2 !== 0" [class.md:text-left]="i % 2 !== 0" [class.md:pl-12]="i % 2 !== 0" [class.md:pr-0]="i % 2 !== 0">
+            <div class="inline-block px-3 py-1 bg-teal-100 dark:bg-teal-900/40 text-teal-800 dark:text-teal-300 rounded-full text-xs font-bold mb-2">
+              {{ job.period }}
+            </div>
+            <h4 class="hidden md:block text-xl font-bold text-slate-700 dark:text-slate-200">{{ job.company }}</h4>
+          </div>
+
+          <!-- Content Card -->
+          <div class="w-full md:w-1/2 pl-12 md:pl-12 order-2" [class.md:order-3]="i % 2 === 0" [class.md:order-1]="i % 2 !== 0" [class.md:pr-12]="i % 2 !== 0" [class.md:pl-0]="i % 2 !== 0">
+            <div (click)="toggleJob(job.id)" class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-lg border border-slate-100 dark:border-slate-700 hover:border-teal-500 dark:hover:border-teal-500 cursor-pointer transition-all duration-300 relative overflow-hidden group/card">
+              
+              <!-- Mobile Company Name -->
+              <h4 class="md:hidden text-lg font-bold text-slate-700 dark:text-slate-200 mb-1">{{ job.company }}</h4>
+              
+              <h5 class="text-lg font-bold text-teal-600 dark:text-teal-400 mb-2 pr-8">{{ job.title }}</h5>
+              <p class="text-slate-600 dark:text-slate-400 text-sm mb-4">{{ job.description }}</p>
+              
+              <!-- Expandable Details -->
+              <div class="grid transition-[grid-template-rows] duration-500 ease-out" [style.grid-template-rows]="job.active ? '1fr' : '0fr'">
+                <div class="overflow-hidden">
+                  <ul class="space-y-2 mt-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                    @for (detail of job.details; track detail) {
+                      <li class="flex items-start text-sm text-slate-600 dark:text-slate-300">
+                        <span class="mr-2 text-teal-500">▹</span>
+                        {{ detail }}
+                      </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Chevron Toggle Button -->
+              <div 
+                class="absolute top-6 right-6 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 shadow-sm"
+                [class.rotate-180]="job.active"
+                [class.bg-teal-50]="job.active"
+                [class.dark:bg-teal-900/30]="job.active"
+                [class.text-teal-600]="job.active"
+                [class.bg-slate-100]="!job.active"
+                [class.dark:bg-slate-800]="!job.active"
+                [class.text-slate-400]="!job.active"
+                [class.group-hover/card:bg-teal-50]="!job.active"
+                [class.group-hover/card:dark:bg-slate-700]="!job.active"
+                [class.group-hover/card:text-teal-500]="!job.active"
+              >
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      }
+    </div>
+  </div>
+</section>

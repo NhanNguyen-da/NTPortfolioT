@@ -1,0 +1,116 @@
+<header class="fixed w-full z-50 transition-all duration-300 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-slate-200 dark:border-slate-800">
+  <div class="container mx-auto px-6 h-20 flex justify-between items-center">
+    <!-- Logo -->
+    <a href="#" (click)="scrollToSection('#hero', $event)" class="text-2xl font-bold font-poppins text-teal-600 dark:text-teal-400 tracking-tight shrink-0">
+      NTN<span class="text-slate-800 dark:text-white">.dev</span>
+    </a>
+
+    <!-- Desktop Nav & Actions -->
+    <div class="hidden md:flex items-center gap-8">
+      <!-- Nav Items -->
+      <nav class="flex items-center gap-6">
+        @for (item of navItems; track item.label) {
+          <a [href]="item.href" (click)="scrollToSection(item.href, $event)" class="text-xs font-bold text-slate-500 hover:text-teal-600 dark:text-slate-400 dark:hover:text-teal-400 transition-colors uppercase tracking-widest cursor-pointer">
+            {{ item.label }}
+          </a>
+        }
+      </nav>
+
+      <!-- Vertical Divider -->
+      <div class="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
+
+      <!-- Action Group -->
+      <div class="flex items-center gap-4">
+        <!-- Theme Toggle Switch -->
+        <button 
+            (click)="toggleTheme()" 
+            class="relative inline-flex items-center h-7 w-14 rounded-full transition-colors duration-300 focus:outline-none ring-1 ring-slate-200 dark:ring-slate-700"
+            [class.bg-slate-200]="!themeService.isDarkMode()"
+            [class.bg-teal-600]="themeService.isDarkMode()"
+            aria-label="Toggle Dark Mode"
+        >
+            <span class="sr-only">Toggle Theme</span>
+            
+            <!-- Thumb containing Icon -->
+            <span 
+                class="absolute left-1 top-1 bg-white rounded-full w-5 h-5 transition-transform duration-300 flex items-center justify-center shadow-md z-10"
+                [class.translate-x-7]="themeService.isDarkMode()"
+                [class.translate-x-0]="!themeService.isDarkMode()"
+            >
+                @if (themeService.isDarkMode()) {
+                  <!-- Moon Icon for Dark Mode -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-teal-600" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                  </svg>
+                } @else {
+                  <!-- Sun Icon for Light Mode -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                }
+            </span>
+        </button>
+
+        <!-- Contact Me Button -->
+        <a href="#contact" (click)="scrollToSection('#contact', $event)" class="px-6 py-2.5 text-sm font-bold text-white bg-teal-600 hover:bg-teal-700 rounded-lg transition-all shadow-lg shadow-teal-600/20 hover:shadow-teal-600/30 hover:-translate-y-0.5 cursor-pointer">
+          Contact Me
+        </a>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button (click)="toggleMenu()" class="md:hidden p-2 text-slate-600 dark:text-slate-200">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        @if (isMenuOpen()) {
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        } @else {
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        }
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  @if (isMenuOpen()) {
+    <div class="md:hidden bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+      <div class="flex flex-col p-4 space-y-4">
+        @for (item of navItems; track item.label) {
+          <a [href]="item.href" (click)="scrollToSection(item.href, $event)" class="text-base font-medium text-slate-600 dark:text-slate-300 hover:text-teal-600 dark:hover:text-teal-400 cursor-pointer">
+            {{ item.label }}
+          </a>
+        }
+        <div class="h-px bg-slate-100 dark:bg-slate-800 my-2"></div>
+        
+        <div class="flex items-center justify-between">
+            <span class="text-slate-600 dark:text-slate-300 font-medium">Dark Mode</span>
+            
+            <!-- Mobile Toggle Switch -->
+            <button 
+                (click)="toggleTheme()" 
+                class="relative inline-flex items-center h-7 w-14 rounded-full transition-colors duration-300 focus:outline-none ring-1 ring-slate-200 dark:ring-slate-700"
+                [class.bg-slate-200]="!themeService.isDarkMode()"
+                [class.bg-teal-600]="themeService.isDarkMode()"
+            >
+                <span class="sr-only">Toggle Theme</span>
+                
+                <span 
+                    class="absolute left-1 top-1 bg-white rounded-full w-5 h-5 transition-transform duration-300 flex items-center justify-center shadow-md z-10"
+                    [class.translate-x-7]="themeService.isDarkMode()"
+                    [class.translate-x-0]="!themeService.isDarkMode()"
+                >
+                    @if (themeService.isDarkMode()) {
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-teal-600" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                      </svg>
+                    } @else {
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                    }
+                </span>
+            </button>
+        </div>
+      </div>
+    </div>
+  }
+</header>
