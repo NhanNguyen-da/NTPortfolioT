@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "ng serve",
-    "build": "ng build && cp docs/index.html docs/main-*.js docs/.nojekyll docs/3rdpartylicenses.txt docs/prerendered-routes.json . 2>/dev/null || copy docs\\index.html . && copy docs\\main-*.js . && copy docs\\.nojekyll .",
+    "build": "ng build",
+    "deploy": "npm run build && cp docs/index.html docs/main-*.js . || copy docs\\index.html . && copy docs\\main-*.js .",
     "preview": "ng serve --configuration=production"
   },
   "dependencies": {

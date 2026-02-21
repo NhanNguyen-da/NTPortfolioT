@@ -17,17 +17,16 @@ export class AboutComponent implements OnInit, OnDestroy {
   ];
 
   // Image State (Signals)
-  // Using stable IDs for consistent "Technical" look since AI generation is disabled due to permissions
   aboutImages = signal<string[]>([
-    'https://picsum.photos/id/48/400/500',   // Tech/Laptop -> Dashboard Analysis
-    'https://picsum.photos/id/180/400/500',  // Work/Data -> FPT HIS 2.0
-    'https://picsum.photos/id/60/400/500'    // Office/Tech -> Infrastructure
+    'assets/dashboard-3.jpg',
+    'assets/4-eHospital-1.jpg',
+    'assets/chatbot - 4.jpg'
   ]);
-  
+
   imageCaptions = signal<string[]>([
     'Dashboard Analysis',
-    'FPT HIS 2.0 Software',
-    'Infrastructure & Server Room'
+    'FPT eHospital 2.0+ Eco System',
+    'Healthcare Chatbot'
   ]);
 
   currentImageIndex = signal(0);

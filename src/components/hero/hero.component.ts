@@ -12,16 +12,8 @@ export class HeroComponent implements OnInit, OnDestroy {
   roles = ['Healthcare Software Developer', 'IT Supervisor', 'System Architect', 'Data Analyst'];
   currentRole = signal('');
   
-  // Slideshow State
-  heroImages = [
-    'https://picsum.photos/id/48/800/800',  // Tech/Laptop
-    'https://picsum.photos/id/180/800/800', // Notebook/Work
-    'https://picsum.photos/id/370/800/800', // City/Urban
-    'https://picsum.photos/id/3/800/800'    // Tech
-  ];
-  currentImageIndex = signal(0);
-  slideInterval: any;
-  isPaused = false;
+  // Hero Image
+  heroImage = 'assets/intro.jpg';
 
   // Typewriter State
   roleIndex = 0;
@@ -34,49 +26,10 @@ export class HeroComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.type();
-    this.startSlideShow();
   }
 
   ngOnDestroy() {
     clearTimeout(this.typewriterTimer);
-    this.stopSlideShow();
-  }
-
-  // --- Slideshow Logic ---
-
-  startSlideShow() {
-    this.stopSlideShow();
-    // Auto-change every 3 seconds
-    this.slideInterval = setInterval(() => {
-      if (!this.isPaused) {
-        this.nextImage();
-      }
-    }, 3000);
-  }
-
-  stopSlideShow() {
-    if (this.slideInterval) {
-      clearInterval(this.slideInterval);
-      this.slideInterval = null;
-    }
-  }
-
-  nextImage() {
-    this.currentImageIndex.update(i => (i + 1) % this.heroImages.length);
-  }
-
-  prevImage() {
-    this.currentImageIndex.update(i => (i - 1 + this.heroImages.length) % this.heroImages.length);
-  }
-
-  onImageHover() {
-    this.isPaused = true;
-    this.stopSlideShow();
-  }
-
-  onImageLeave() {
-    this.isPaused = false;
-    this.startSlideShow();
   }
 
   // --- Typewriter Logic ---
