@@ -11,19 +11,17 @@
   "dependencies": {
     "@angular/build": "^21.1.4",
     "@angular/cli": "^21.1.4",
-    "@angular/common": "^21.1.4",
-    "@angular/compiler": "^21.1.4",
-    "@angular/compiler-cli": "^21.1.4",
-    "@angular/core": "^21.1.4",
-    "@angular/forms": "^21.1.4",
-    "@angular/platform-browser": "^21.1.4",
-    "@google/genai": "^1.41.0",
+    "@angular/common": "^21.1.5",
+    "@angular/compiler": "^21.1.5",
+    "@angular/compiler-cli": "^21.1.5",
+    "@angular/core": "^21.1.5",
+    "@angular/forms": "^21.1.5",
+    "@angular/platform-browser": "^21.1.5",
     "rxjs": "^7.8.2",
     "tailwindcss": "latest"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
-    "typescript": "^5.9.3",
-    "vite": "^6.2.0"
+    "typescript": "^5.9.3"
   }
 }

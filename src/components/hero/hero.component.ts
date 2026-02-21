@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, signal } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule, ScrollRevealDirective, NgOptimizedImage],
+  imports: [CommonModule, ScrollRevealDirective],
   templateUrl: './hero.component.html'
 })
 export class HeroComponent implements OnInit, OnDestroy {

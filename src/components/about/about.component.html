@@ -17,19 +17,11 @@
           <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl z-10 bg-slate-100 dark:bg-slate-800">
              
              <!-- The Image -->
-             <img 
-               [src]="aboutImages()[currentImageIndex()]" 
-               alt="Portfolio Showcase" 
+             <img
+               [src]="aboutImages()[currentImageIndex()]"
+               alt="Portfolio Showcase"
                class="object-cover w-full h-full transition-all duration-[600ms] group-hover:scale-105"
              >
-             
-             <!-- Loading Overlay -->
-             @if (isGenerating()) {
-                <div class="absolute top-4 right-4 bg-black/50 backdrop-blur px-3 py-1 rounded-full flex items-center gap-2 z-30">
-                  <div class="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div>
-                  <span class="text-[10px] text-white font-medium uppercase tracking-wide">AI Generating...</span>
-                </div>
-             }
 
              <!-- Caption Overlay -->
              <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent p-6 pt-12 z-20 transition-opacity duration-300">

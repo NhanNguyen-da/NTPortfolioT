@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy, signal } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, ScrollRevealDirective, NgOptimizedImage],
+  imports: [CommonModule, ScrollRevealDirective],
   templateUrl: './about.component.html'
 })
 export class AboutComponent implements OnInit, OnDestroy {
@@ -33,7 +33,6 @@ export class AboutComponent implements OnInit, OnDestroy {
   currentImageIndex = signal(0);
   slideInterval: any;
   isPaused = false;
-  isGenerating = signal(false); // Kept for template compatibility
 
   ngOnInit() {
     this.startSlideShow();
