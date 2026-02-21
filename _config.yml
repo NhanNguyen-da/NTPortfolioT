@@ -1,1 +1,20 @@
+# _config.yml
+title: "NTN Portfolio"
+description: "Mô tả website"
+baseurl: "/NTPortfolio"
+url: "https://nhannguyen-da.github.io"
 
+# Bắt buộc - không để Jekyll xử lý lại file Angular đã build
+exclude:
+  - node_modules/
+  - src/
+  - angular.json
+  - package.json
+  - package-lock.json
+  - tsconfig.json
+  - "*.ts"
+  - "*.tsx"
+
+# Chỉ serve từ thư mục docs
+include:
+  - docs/
