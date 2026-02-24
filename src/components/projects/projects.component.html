@@ -1,4 +1,4 @@
-<section id="projects" class="scroll-mt-24 py-24 bg-white dark:bg-slate-900 transition-colors overflow-x-hidden">
+<section id="projects" class="scroll-mt-24 pt-8 pb-24 bg-white dark:bg-slate-900 transition-colors overflow-x-hidden">
   <div class="container mx-auto px-6">
 
     <!-- Section Header -->
@@ -46,7 +46,7 @@
 
             <!-- ── Card ── -->
             <div
-              class="project-card flex-shrink-0 relative rounded-2xl overflow-hidden shadow-md cursor-pointer select-none"
+              class="project-card flex-shrink-0 relative rounded-2xl overflow-hidden shadow-md cursor-pointer select-none bg-slate-900"
               style="width: 256px; height: 340px;"
               [class.cursor-not-allowed]="project.isPlaceholder"
               (click)="open(project)"
@@ -75,7 +75,7 @@
 
                 <!-- Cover Image -->
                 <img
-                  class="card-img absolute inset-0 w-full h-full object-cover"
+                  class="card-img absolute inset-0 w-full h-full object-contain"
                   [src]="project.coverImage"
                   [alt]="project.title"
                 >
@@ -167,32 +167,76 @@
     (click)="close()"
   >
     <div
-      class="modal-panel relative w-full max-w-4xl bg-white dark:bg-slate-900 rounded-2xl
+      class="modal-panel relative bg-white dark:bg-slate-900 rounded-2xl
              overflow-hidden shadow-2xl flex flex-col md:flex-row"
-      style="max-height: 90vh;"
+      style="width: 82vw; height: 82vh;"
       (click)="$event.stopPropagation()"
     >
 
-      <!-- Left Column: Image -->
-      <div class="relative w-full md:w-[45%] min-h-[260px] md:min-h-0 bg-slate-900 flex-shrink-0 overflow-hidden">
+      <!-- Left Column: Image (60%) -->
+      <div class="relative w-full md:w-[60%] min-h-[260px] md:min-h-0 bg-slate-900 flex-shrink-0 overflow-hidden">
         <img
-          [src]="selectedProject()!.coverImage"
+          [src]="modalImage()"
           [alt]="selectedProject()!.title"
-          class="absolute inset-0 w-full h-full object-cover"
+          class="absolute inset-0 w-full h-full object-contain"
         >
-        <!-- Subtle teal tone overlay -->
-        <div class="absolute inset-0 bg-teal-900/20 pointer-events-none"></div>
-
         <!-- Category watermark bottom-left -->
-        <div class="absolute bottom-4 left-4">
+        <div class="absolute bottom-4 left-4 z-10">
           <span class="px-3 py-1.5 bg-black/50 backdrop-blur-sm text-teal-300 text-[10px] font-bold uppercase tracking-widest rounded-full">
             {{ selectedProject()!.category }}
           </span>
         </div>
+
+        <!-- Zoom icon — top-right -->
+        <button
+          (click)="openFullscreen(); $event.stopPropagation()"
+          class="absolute top-3 right-3 z-10 w-9 h-9
+                 bg-black/50 hover:bg-teal-600 backdrop-blur-sm text-white
+                 rounded-full flex items-center justify-center transition-colors duration-200"
+          aria-label="View fullscreen"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"/>
+          </svg>
+        </button>
+
+        <!-- Prev / Next (only when multiple images) -->
+        @if (selectedProject()!.images.length > 1) {
+          <button
+            (click)="prevImage(); $event.stopPropagation()"
+            class="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9
+                   bg-black/50 hover:bg-teal-600 text-white rounded-full
+                   flex items-center justify-center transition-colors duration-200"
+            aria-label="Previous image"
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <button
+            (click)="nextImage(); $event.stopPropagation()"
+            class="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9
+                   bg-black/50 hover:bg-teal-600 text-white rounded-full
+                   flex items-center justify-center transition-colors duration-200"
+            aria-label="Next image"
+          >
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+
+          <!-- Image counter -->
+          <div class="absolute bottom-4 right-4 z-10 px-2.5 py-1 bg-black/50 backdrop-blur-sm rounded-full">
+            <span class="text-white text-[11px] font-medium">
+              {{ modalImageIndex() + 1 }} / {{ selectedProject()!.images.length }}
+            </span>
+          </div>
+        }
       </div>
 
       <!-- Right Column: Info -->
-      <div class="flex flex-col p-8 md:p-10 overflow-y-auto">
+      <div class="flex flex-col p-8 md:p-10 overflow-y-auto flex-1">
 
         <!-- Title -->
         <h3 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-2 leading-tight">
@@ -251,3 +295,81 @@
   </div>
 }
 <!-- ── End Modal ── -->
+
+<!-- ── Fullscreen Lightbox ── -->
+@if (isFullscreen() && selectedProject()) {
+  <div
+    class="fullscreen-backdrop fixed inset-0 z-[100] flex items-center justify-center bg-black/95"
+    (click)="closeFullscreen()"
+  >
+    <!-- Image -->
+    <img
+      [src]="modalImage()"
+      [alt]="selectedProject()!.title"
+      class="fullscreen-img max-w-[90vw] max-h-[85vh] object-contain rounded-lg shadow-2xl select-none"
+      (click)="$event.stopPropagation()"
+    >
+
+    <!-- Prev -->
+    @if (selectedProject()!.images.length > 1) {
+      <button
+        (click)="prevImage(); $event.stopPropagation()"
+        class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12
+               bg-white/10 hover:bg-teal-600 text-white rounded-full
+               flex items-center justify-center transition-colors duration-200 backdrop-blur-sm"
+        aria-label="Previous image"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+
+      <!-- Next -->
+      <button
+        (click)="nextImage(); $event.stopPropagation()"
+        class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12
+               bg-white/10 hover:bg-teal-600 text-white rounded-full
+               flex items-center justify-center transition-colors duration-200 backdrop-blur-sm"
+        aria-label="Next image"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+      <!-- Dot indicators -->
+      <div class="absolute bottom-6 left-0 right-0 flex justify-center gap-2">
+        @for (img of selectedProject()!.images; track $index) {
+          <button
+            (click)="modalImageIndex.set($index); $event.stopPropagation()"
+            class="rounded-full transition-all duration-200"
+            [class]="modalImageIndex() === $index
+              ? 'w-5 h-2 bg-teal-400'
+              : 'w-2 h-2 bg-white/30 hover:bg-white/60'"
+          ></button>
+        }
+      </div>
+
+      <!-- Counter -->
+      <div class="absolute top-5 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-white/10 backdrop-blur-sm rounded-full">
+        <span class="text-white text-sm font-medium">
+          {{ modalImageIndex() + 1 }} / {{ selectedProject()!.images.length }}
+        </span>
+      </div>
+    }
+
+    <!-- Close -->
+    <button
+      (click)="closeFullscreen()"
+      class="absolute top-4 right-4 w-10 h-10
+             bg-white/10 hover:bg-red-500 backdrop-blur-sm text-white
+             rounded-full flex items-center justify-center transition-colors duration-200"
+      aria-label="Close fullscreen"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+}
+<!-- ── End Fullscreen Lightbox ── -->

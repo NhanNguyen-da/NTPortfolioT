@@ -8,6 +8,7 @@ export interface Project {
   subtitle: string;
   description: string;
   coverImage: string;
+  images: string[];
   tags: string[];
   category: string;
   isPlaceholder?: boolean;
@@ -49,57 +50,135 @@ export interface Project {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50%       { opacity: 0.7; transform: scale(1.08); }
     }
+
+    .fullscreen-backdrop { animation: bfadeIn 0.2s ease forwards; }
+    .fullscreen-img { animation: fsZoomIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+    @keyframes fsZoomIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
+    }
   `]
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
-  private readonly CARD_W  = 256; // px
-  private readonly CARD_GAP = 20; // px
+  private readonly CARD_W  = 256;
+  private readonly CARD_GAP = 20;
   readonly STEP = this.CARD_W + this.CARD_GAP;
 
   readonly projects: Project[] = [
     {
       id: 1,
       title: 'Dashboard Analytics',
-      subtitle: 'ROI / Patient Register Ratio Tracking',
-      description: 'A real-time analytics dashboard that visualises hospital ROI against patient registration volumes. Enables management to spot trends, optimise resource allocation, and make data-driven decisions across departments.',
-      coverImage: 'assets/dashboard-3.jpg',
-      tags: ['Angular', 'HIS', 'SQL', 'Analytics', 'KPIs'],
+      subtitle: 'Hospital Performance & KPI Monitoring',
+      description: 'A comprehensive analytics dashboard providing real-time visibility into hospital operations. Tracks key performance indicators including surgical statistics, bed occupancy rates, outpatient examination metrics, and patient registration data to support data-driven management decisions.',
+      coverImage: 'assets/Dashboard/Dashboard-poster.png',
+      images: [
+        'assets/Dashboard/Dashboard-poster.png',
+        'assets/Dashboard/CONGSUATGIUONGBENH.jpg',
+        'assets/Dashboard/KHAMBENH-1.jpg',
+        'assets/Dashboard/KHAMBENH-2.jpg',
+        'assets/Dashboard/KHAMBENH-3.jpg',
+        'assets/Dashboard/MHBT-1.png',
+        'assets/Dashboard/THONGKEPHAUTHUAT.jpg',
+        'assets/Dashboard/THONGKEPHAUTHUAT-2.jpg',
+      ],
+      tags: ['Angular', 'HIS', 'SQL', 'Analytics', 'KPIs', 'Dashboard'],
       category: 'Healthcare Analytics'
     },
     {
       id: 2,
+      title: 'Patient Queue Management',
+      subtitle: 'Outpatient Queue & Flow Optimisation',
+      description: 'A queue management system that organises and displays patient waiting lists for outpatient departments. Reduces congestion at counters, improves patient experience, and provides clinical staff with real-time queue status and call controls.',
+      coverImage: 'assets/QMS/QMS - poster.png',
+      images: [
+        'assets/QMS/QMS - poster.png',
+        'assets/QMS/QMS-1.jpg',
+        'assets/QMS/QMS-2.jpg.png',
+      ],
+      tags: ['Queue System', 'HIS', 'Patient Flow', 'Outpatient', 'SQL'],
+      category: 'Patient Experience'
+    },
+    {
+      id: 3,
       title: 'Pharmacy Management',
-      subtitle: 'OP / IP Prescription & Dispensing',
-      description: 'An end-to-end pharmacy module integrated with the HIS. Handles prescription workflows, medication dispensing, and inventory tracking for both Outpatient (OP) and Inpatient (IP) departments, reducing dispensing errors and wait times.',
-      coverImage: 'assets/4-eHospital-1.jpg',
-      tags: ['HIS', 'EMR', 'Pharmacy', 'SQL'],
+      subtitle: 'Prescription & Drug Interaction Control',
+      description: 'Integrated pharmacy module for managing outpatient and inpatient prescriptions. Features drug interaction alerts, dispensing workflows, and real-time inventory tracking to minimise medication errors and streamline pharmacy department operations.',
+      coverImage: 'assets/Hi-Pha/pharmacy-poster.png',
+      images: [
+        'assets/Hi-Pha/pharmacy-poster.png',
+        'assets/Hi-Pha/HI-PHA-1.jpg',
+        'assets/Hi-Pha/HI-PHA-2.jpg',
+        'assets/Hi-Pha/HI-PHA-3.jpg',
+      ],
+      tags: ['HIS', 'EMR', 'Pharmacy', 'Drug Interaction', 'SQL'],
       category: 'Hospital Information System'
     },
-    { id: 3, title: 'Coming Soon', subtitle: 'New project in development', description: '', coverImage: '', tags: [], category: '', isPlaceholder: true },
-    { id: 4, title: 'Coming Soon', subtitle: 'New project in development', description: '', coverImage: '', tags: [], category: '', isPlaceholder: true },
-    { id: 5, title: 'Coming Soon', subtitle: 'New project in development', description: '', coverImage: '', tags: [], category: '', isPlaceholder: true },
+    {
+      id: 4,
+      title: 'Equipment Management',
+      subtitle: 'IT Asset Lifecycle & Vendor Tracking',
+      description: 'A full-cycle IT asset management system for tracking hospital equipment including laptops, printers, and other devices. Manages purchase orders, maintenance schedules, replacement timelines, and vendor repair workflows to ensure operational continuity.',
+      coverImage: 'assets/QLTrangThietBi/Equipment-poster.png',
+      images: [
+        'assets/QLTrangThietBi/Equipment-poster.png',
+        'assets/QLTrangThietBi/TTB-1.jpg',
+        'assets/QLTrangThietBi/TTB-2.jpg',
+      ],
+      tags: ['Asset Management', 'IT Equipment', 'Vendor Management', 'Maintenance', 'SQL'],
+      category: 'IT Operations'
+    },
+    {
+      id: 5,
+      title: 'Consultation & Admission',
+      subtitle: 'Bed Booking & Room Reservation',
+      description: 'A pre-admission consultation module allowing patients to register and book a bed or room before hospital arrival. Streamlines the admission process, reduces wait times at the counter, and improves ward capacity planning for clinical coordinators.',
+      coverImage: 'assets/TuVanNhapVien/admission-system-poster.png',
+      images: [
+        'assets/TuVanNhapVien/admission-system-poster.png',
+        'assets/TuVanNhapVien/QL-Giuong.jpg',
+        'assets/TuVanNhapVien/QL-Giuong-2.jpg',
+        'assets/TuVanNhapVien/QL-Giuong-3.jpg',
+      ],
+      tags: ['Bed Management', 'Admission', 'Room Booking', 'HIS', 'Patient Registration'],
+      category: 'Patient Admission'
+    },
   ];
 
-  // Three copies of the list for seamless infinite loop: [copy1 | copy2 | copy3]
   readonly extended = [...this.projects, ...this.projects, ...this.projects];
   readonly n = this.projects.length;
 
-  currentIndex   = signal(this.n); // Start at copy2[0]
-  animated       = signal(true);
+  currentIndex    = signal(this.n);
+  animated        = signal(true);
   selectedProject = signal<Project | null>(null);
+  modalImageIndex = signal(0);
+  isFullscreen    = signal(false);
 
   private paused = false;
   private timer: any;
+  private keyHandler = (e: KeyboardEvent) => {
+    if (this.isFullscreen()) {
+      if (e.key === 'Escape')     { this.isFullscreen.set(false); return; }
+      if (e.key === 'ArrowRight') { this.nextImage(); return; }
+      if (e.key === 'ArrowLeft')  { this.prevImage(); return; }
+    } else if (this.selectedProject()) {
+      if (e.key === 'Escape') { this.close(); }
+    }
+  };
 
   trackTransform = computed(() =>
     `translateX(-${this.currentIndex() * this.STEP}px)`
   );
 
-  // Which real project index (0-based) is at the front
   activeSlide = computed(() => ((this.currentIndex() % this.n) + this.n) % this.n);
 
-  ngOnInit()    { this.start(); }
-  ngOnDestroy() { this.stop();  }
+  modalImage = computed(() => {
+    const p = this.selectedProject();
+    if (!p) return '';
+    return p.images[this.modalImageIndex()] ?? p.coverImage;
+  });
+
+  ngOnInit()    { this.start(); document.addEventListener('keydown', this.keyHandler); }
+  ngOnDestroy() { this.stop();  document.removeEventListener('keydown', this.keyHandler); }
 
   start() {
     this.stop();
@@ -113,7 +192,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   next() {
     this.animated.set(true);
     this.currentIndex.update(i => i + 1);
-    // If we passed copy2's last item, silently jump back to copy2's first
     if (this.currentIndex() >= this.n * 2) {
       setTimeout(() => this.silentJump(this.n), 420);
     }
@@ -122,7 +200,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   prev() {
     this.animated.set(true);
     this.currentIndex.update(i => i - 1);
-    // If we went behind copy2's first item, silently jump to copy2's last
     if (this.currentIndex() < this.n) {
       setTimeout(() => this.silentJump(this.n * 2 - 1), 420);
     }
@@ -131,13 +208,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   goTo(i: number) {
     this.animated.set(true);
     this.currentIndex.set(this.n + i);
-    this.start(); // reset timer
+    this.start();
   }
 
   private silentJump(to: number) {
     this.animated.set(false);
     this.currentIndex.set(to);
-    // Re-enable transition after two frames (ensures DOM has repainted)
     requestAnimationFrame(() => requestAnimationFrame(() => this.animated.set(true)));
   }
 
@@ -145,8 +221,30 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   resume() { this.paused = false; }
 
   open(project: Project) {
-    if (!project.isPlaceholder) this.selectedProject.set(project);
+    if (!project.isPlaceholder) {
+      this.selectedProject.set(project);
+      this.modalImageIndex.set(0);
+      this.isFullscreen.set(false);
+    }
   }
 
-  close() { this.selectedProject.set(null); }
+  close() {
+    this.selectedProject.set(null);
+    this.isFullscreen.set(false);
+  }
+
+  nextImage() {
+    const p = this.selectedProject();
+    if (!p) return;
+    this.modalImageIndex.update(i => (i + 1) % p.images.length);
+  }
+
+  prevImage() {
+    const p = this.selectedProject();
+    if (!p) return;
+    this.modalImageIndex.update(i => (i - 1 + p.images.length) % p.images.length);
+  }
+
+  openFullscreen()  { this.isFullscreen.set(true); }
+  closeFullscreen() { this.isFullscreen.set(false); }
 }
