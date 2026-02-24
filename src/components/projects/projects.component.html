@@ -1,0 +1,253 @@
+<section id="projects" class="scroll-mt-24 py-24 bg-white dark:bg-slate-900 transition-colors overflow-x-hidden">
+  <div class="container mx-auto px-6">
+
+    <!-- Section Header -->
+    <div appScrollReveal class="text-center mb-16">
+      <h2 class="text-sm font-bold tracking-widest text-teal-600 dark:text-teal-400 uppercase mb-3">Portfolio</h2>
+      <h3 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">Featured Projects</h3>
+      <p class="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-lg">
+        Healthcare IT solutions designed to streamline hospital operations and improve patient outcomes.
+      </p>
+    </div>
+
+    <!-- ── Carousel ── -->
+    <div
+      class="relative"
+      (mouseenter)="pause()"
+      (mouseleave)="resume()"
+    >
+      <!-- Left Arrow -->
+      <button
+        (click)="prev()"
+        class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11
+               bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+               rounded-full shadow-lg flex items-center justify-center
+               text-slate-500 dark:text-slate-400
+               hover:bg-teal-600 hover:text-white hover:border-teal-600
+               dark:hover:bg-teal-600 dark:hover:border-teal-600
+               transition-all duration-200"
+        aria-label="Previous project"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+
+      <!-- Overflow Window (mx-14 keeps arrows from overlapping cards) -->
+      <div class="overflow-hidden mx-14 py-6">
+        <!-- Sliding Track -->
+        <div
+          class="flex track"
+          [style.gap.px]="20"
+          [style.transition]="animated() ? 'transform 0.42s cubic-bezier(0.25,0.1,0.25,1)' : 'none'"
+          [style.transform]="trackTransform()"
+        >
+          @for (project of extended; track $index) {
+
+            <!-- ── Card ── -->
+            <div
+              class="project-card flex-shrink-0 relative rounded-2xl overflow-hidden shadow-md cursor-pointer select-none"
+              style="width: 256px; height: 340px;"
+              [class.cursor-not-allowed]="project.isPlaceholder"
+              (click)="open(project)"
+              [attr.aria-label]="project.isPlaceholder ? 'Coming soon' : 'Open ' + project.title"
+            >
+
+              @if (project.isPlaceholder) {
+                <!-- ── Placeholder Card ── -->
+                <div class="absolute inset-0 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 flex flex-col items-center justify-center">
+                  <!-- Dashed border overlay -->
+                  <div class="absolute inset-[6px] rounded-xl border-2 border-dashed border-slate-600/60 pointer-events-none"></div>
+
+                  <!-- Pulsing icon -->
+                  <div class="placeholder-pulse w-16 h-16 rounded-full bg-teal-800/40 border border-teal-600/30 flex items-center justify-center mb-5">
+                    <svg class="w-8 h-8 text-teal-400/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z"/>
+                    </svg>
+                  </div>
+                  <p class="text-slate-300 font-semibold text-sm tracking-wide">Coming Soon</p>
+                  <p class="text-slate-500 text-xs mt-1 px-6 text-center leading-relaxed">New project in development</p>
+                </div>
+
+              } @else {
+                <!-- ── Real Card ── -->
+
+                <!-- Cover Image -->
+                <img
+                  class="card-img absolute inset-0 w-full h-full object-cover"
+                  [src]="project.coverImage"
+                  [alt]="project.title"
+                >
+
+                <!-- Base gradient so title is always readable -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none"></div>
+
+                <!-- Category badge -->
+                <div class="absolute top-3 left-3 z-10">
+                  <span class="px-2 py-1 bg-teal-600/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
+                    {{ project.category }}
+                  </span>
+                </div>
+
+                <!-- Always-visible bottom label -->
+                <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                  <h4 class="text-white font-bold text-base leading-snug">{{ project.title }}</h4>
+                  <p class="text-teal-300 text-xs mt-0.5 leading-snug line-clamp-2">{{ project.subtitle }}</p>
+                </div>
+
+                <!-- Hover reveal panel (slides up from bottom) -->
+                <div class="card-reveal absolute inset-0 bg-gradient-to-t from-black/95 via-black/80 to-black/40 flex flex-col justify-end p-5 z-20">
+                  <span class="text-teal-400 text-[10px] font-bold uppercase tracking-widest mb-2">
+                    {{ project.category }}
+                  </span>
+                  <h4 class="text-white font-bold text-base leading-snug mb-1">{{ project.title }}</h4>
+                  <p class="text-slate-300 text-xs leading-relaxed line-clamp-3 mb-4">{{ project.subtitle }}</p>
+                  <div class="flex items-center gap-1.5 text-teal-400 text-xs font-semibold">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                    </svg>
+                    Click to view details
+                  </div>
+                </div>
+
+              }
+            </div>
+            <!-- ── End Card ── -->
+
+          }
+        </div>
+      </div>
+
+      <!-- Right Arrow -->
+      <button
+        (click)="next()"
+        class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-11 h-11
+               bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+               rounded-full shadow-lg flex items-center justify-center
+               text-slate-500 dark:text-slate-400
+               hover:bg-teal-600 hover:text-white hover:border-teal-600
+               dark:hover:bg-teal-600 dark:hover:border-teal-600
+               transition-all duration-200"
+        aria-label="Next project"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+    <!-- ── End Carousel ── -->
+
+    <!-- Dot indicators -->
+    <div class="flex justify-center gap-2 mt-8">
+      @for (p of projects; track p.id; let i = $index) {
+        <button
+          (click)="goTo(i)"
+          class="rounded-full transition-all duration-300"
+          [class]="activeSlide() === i
+            ? 'w-6 h-2 bg-teal-600'
+            : 'w-2 h-2 bg-slate-300 dark:bg-slate-600 hover:bg-teal-400'"
+          [attr.aria-label]="'Go to project ' + (i + 1)"
+        ></button>
+      }
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── Modal ── -->
+@if (selectedProject()) {
+  <div
+    class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6
+           bg-black/70 backdrop-blur-sm"
+    (click)="close()"
+  >
+    <div
+      class="modal-panel relative w-full max-w-4xl bg-white dark:bg-slate-900 rounded-2xl
+             overflow-hidden shadow-2xl flex flex-col md:flex-row"
+      style="max-height: 90vh;"
+      (click)="$event.stopPropagation()"
+    >
+
+      <!-- Left Column: Image -->
+      <div class="relative w-full md:w-[45%] min-h-[260px] md:min-h-0 bg-slate-900 flex-shrink-0 overflow-hidden">
+        <img
+          [src]="selectedProject()!.coverImage"
+          [alt]="selectedProject()!.title"
+          class="absolute inset-0 w-full h-full object-cover"
+        >
+        <!-- Subtle teal tone overlay -->
+        <div class="absolute inset-0 bg-teal-900/20 pointer-events-none"></div>
+
+        <!-- Category watermark bottom-left -->
+        <div class="absolute bottom-4 left-4">
+          <span class="px-3 py-1.5 bg-black/50 backdrop-blur-sm text-teal-300 text-[10px] font-bold uppercase tracking-widest rounded-full">
+            {{ selectedProject()!.category }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Right Column: Info -->
+      <div class="flex flex-col p-8 md:p-10 overflow-y-auto">
+
+        <!-- Title -->
+        <h3 class="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white mb-2 leading-tight">
+          {{ selectedProject()!.title }}
+        </h3>
+
+        <!-- Subtitle -->
+        <p class="text-teal-600 dark:text-teal-400 font-medium text-base mb-5">
+          {{ selectedProject()!.subtitle }}
+        </p>
+
+        <!-- Divider -->
+        <div class="w-10 h-0.5 bg-teal-600 mb-6 rounded-full"></div>
+
+        <!-- Description -->
+        <p class="text-slate-600 dark:text-slate-300 leading-relaxed flex-1 mb-8">
+          {{ selectedProject()!.description }}
+        </p>
+
+        <!-- Tech Stack -->
+        @if (selectedProject()!.tags.length) {
+          <div>
+            <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-3">
+              Tech Stack
+            </p>
+            <div class="flex flex-wrap gap-2">
+              @for (tag of selectedProject()!.tags; track tag) {
+                <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300
+                             rounded-lg text-xs font-semibold border border-slate-200 dark:border-slate-700">
+                  {{ tag }}
+                </span>
+              }
+            </div>
+          </div>
+        }
+
+      </div>
+
+      <!-- Close Button -->
+      <button
+        (click)="close()"
+        class="absolute top-4 right-4 w-9 h-9
+               bg-white/90 dark:bg-slate-800/90 backdrop-blur
+               text-slate-500 dark:text-slate-400
+               rounded-full flex items-center justify-center shadow-md
+               hover:bg-red-500 hover:text-white
+               transition-all duration-200 z-10"
+        aria-label="Close"
+      >
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+    </div>
+  </div>
+}
+<!-- ── End Modal ── -->

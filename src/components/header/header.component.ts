@@ -15,6 +15,8 @@ export class HeaderComponent {
   navItems = [
     { label: 'About', href: '#about' },
     { label: 'Experience', href: '#experience' },
+    // add label project to the nav items
+    { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
     { label: 'Education', href: '#education' }
   ];
