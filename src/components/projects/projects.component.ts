@@ -96,7 +96,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         'assets/QMS/QMS-2.jpg.png',
       ],
       tags: ['Queue System', 'HIS', 'Patient Flow', 'Outpatient', 'SQL'],
-      category: 'Patient Management Waiting Systems'
+      category: 'Patient Waiting Solutions'
     },
     {
       id: 3,
