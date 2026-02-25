@@ -96,11 +96,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         'assets/QMS/QMS-2.jpg.png',
       ],
       tags: ['Queue System', 'HIS', 'Patient Flow', 'Outpatient', 'SQL'],
-      category: 'Patient Experience'
+      category: 'Patient Management Waiting Systems'
     },
     {
       id: 3,
-      title: 'Pharmacy Management',
+      title: 'Pharmacy Drugs Management',
       subtitle: 'Prescription & Drug Interaction Control',
       description: 'Integrated pharmacy module for managing outpatient and inpatient prescriptions. Features drug interaction alerts, dispensing workflows, and real-time inventory tracking to minimise medication errors and streamline pharmacy department operations.',
       coverImage: 'assets/Hi-Pha/pharmacy-poster.png',
@@ -111,7 +111,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         'assets/Hi-Pha/HI-PHA-3.jpg',
       ],
       tags: ['HIS', 'EMR', 'Pharmacy', 'Drug Interaction', 'SQL'],
-      category: 'Hospital Information System'
+      category: 'Pharmacy Management Systems'
     },
     {
       id: 4,
